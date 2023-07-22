@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+    {% for msg in messages %}
+        <li style="background-color: red;">{{ msg }}</li>
+    {% endfor %}
+{% endif %}
+{% if user.is_authenticated %}
+<form action=""method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Отправить">
+</form>
+{% endif %}
+
+{% for msg in query_chat %}
+    <table>
+        <tr>
+            <th><mark>{{ msg.user }}</mark></th> 
+            <th>Написал: {{ msg.text }}</th> 
+         
+        </tr>
+        <tr>
+            <th>Время: {{ msg.date }}</th>
+        </tr>
+        {% if msg.user.username != user.get_username %}
+            <tr>
+                <th>
+                    <form action="subscribe/{{ msg.user.id }}/" method='post'>
+                        {% csrf_token %}
+                        <input type="submit" value="Добавить в друзи">
+                    </form>
+                </th>
+            </tr>
+            
+        {% endif %}
+    </table>
+    <h1>______________</h1>
+{% endfor %}
+
+
+{% endblock %}

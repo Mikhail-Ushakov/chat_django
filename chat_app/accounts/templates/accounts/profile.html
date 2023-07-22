@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ profile }}</h1>
+<h3>Ваших сообщиений в чате {{ user_msgs.count }}</h3>
+
+<h1>Список друзей</h1>
+<ol>
+    {% for friend in friendly_list %}
+        <li>{{ friend.other_user.username }}</li>
+    {% endfor %}
+</ol>
+{% endblock %}
